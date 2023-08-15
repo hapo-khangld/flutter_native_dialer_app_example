@@ -40,6 +40,7 @@
             android:name=".phone.activity.ExternalCallActivity"
             android:launchMode="singleTask"
             android:resizeableActivity="true"
+            android:theme="@style/AppTheme"
             android:supportsPictureInPicture="true" />
 
         <activity

@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.PowerManager
 import android.telecom.Call
 import android.telecom.InCallService
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.dk.flutter_native_dialer_app_example.phone.activity.ExternalCallActivity
 import com.dk.flutter_native_dialer_app_example.phone.notifications.GSMCallNotificationManager
 
@@ -43,7 +45,7 @@ class GSMCallService : InCallService() {
     }
 
     //todo: listen after have in call: - được gọi khi có cuộc gọi mới
-    @SuppressLint("NewApi")
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCallAdded(call: Call) {
         super.onCallAdded(call)
         CallManager.onCallAdded(call)
@@ -51,26 +53,53 @@ class GSMCallService : InCallService() {
         call.registerCallback(callListener)
 
         val isScreenLocked = (getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager).isDeviceLocked
-        if (!powerManager.isInteractive || call.details.callDirection == Call.Details.DIRECTION_OUTGOING || outgoingCallStates.contains(call.state) || isScreenLocked) {
-            Log.i(GSMCallService::class.java.name, "New Call added. Starting External Call Activity.")
-            val i = Intent(this, ExternalCallActivity::class.java)
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(i)
-            if (call.details.state == Call.STATE_RINGING) {
-                Log.i(GSMCallService::class.java.name, "isRinging set to true.")
-                isRinging = true
-            }
-            if (call.details.state == Call.STATE_RINGING || call.state == Call.STATE_RINGING) {
-                Log.i(GSMCallService::class.java.name, "GSM Screen Locked. Starting notification.")
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.R) {
+            // Xử lý cho Android 11 hoặc cao hơn
+            if (!powerManager.isInteractive || call.details.callDirection == Call.Details.DIRECTION_OUTGOING || outgoingCallStates.contains(call.state) || isScreenLocked) {
+                Log.i(GSMCallService::class.java.name, "New Call added. Starting External Call Activity.")
+                val i = Intent(this, ExternalCallActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(i)
+                if (call.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "isRinging set to true.")
+                    isRinging = true
+                }
+                if (call.state == Call.STATE_RINGING || call.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "GSM Screen Locked. Starting notification.")
+                    callNotificationManager.setupNotification()
+                }
+            } else {
+                Log.i(GSMCallService::class.java.name, "Incoming call received. State is: ${call.state}")
+                if (call.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "isRinging set to true.")
+                    isRinging = true
+                }
                 callNotificationManager.setupNotification()
             }
         } else {
-            Log.i(GSMCallService::class.java.name, "Incoming call received. State is: ${call.details.state}")
-            if (call.details.state == Call.STATE_RINGING) {
-                Log.i(GSMCallService::class.java.name, "isRinging set to true.")
-                isRinging = true
+            // Xử lý cho các phiên bản Android khác
+            if (!powerManager.isInteractive || call.details.callDirection == Call.Details.DIRECTION_OUTGOING || outgoingCallStates.contains(call.state) || isScreenLocked) {
+                Log.i(GSMCallService::class.java.name, "New Call added. Starting External Call Activity.")
+                val i = Intent(this, ExternalCallActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(i)
+                if (call.details.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "isRinging set to true.")
+                    isRinging = true
+                }
+                if (call.details.state == Call.STATE_RINGING || call.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "GSM Screen Locked. Starting notification.")
+                    callNotificationManager.setupNotification()
+                }
+            } else {
+                Log.i(GSMCallService::class.java.name, "Incoming call received. State is: ${call.details.state}")
+                if (call.details.state == Call.STATE_RINGING) {
+                    Log.i(GSMCallService::class.java.name, "isRinging set to true.")
+                    isRinging = true
+                }
+                callNotificationManager.setupNotification()
             }
-            callNotificationManager.setupNotification()
         }
     }
 
