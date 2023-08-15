@@ -65,6 +65,7 @@
     <color name="led_not_registered">#e1e1e1</color>
     <color name="led_error">#ff0000</color>
     <color name="red">#FE2323</color>
+    <color name="annoyance_red">#E83F17</color>
     <color name="black">#000000</color>
     <color name="green">#20C863</color>
 </resources>

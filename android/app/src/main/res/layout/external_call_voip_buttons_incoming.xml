@@ -26,9 +26,9 @@
             android:padding="5dp"
             android:src="@drawable/icon_call_hangup"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="W,1.26:1"
+            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toStartOf="@id/answer"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
@@ -42,10 +42,36 @@
             android:padding="5dp"
             android:src="@drawable/icon_call_answer"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="W,1.26:1"
+            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/hangup" />
+            app:layout_constraintStart_toEndOf="@id/hangup"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+        <TextView
+            android:id="@+id/hangupText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拒否"
+            app:layout_constraintTop_toBottomOf="@id/hangup"
+            app:layout_constraintStart_toStartOf="@id/hangup"
+            app:layout_constraintEnd_toEndOf="@id/hangup"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/answerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="応答"
+            app:layout_constraintTop_toBottomOf="@id/answer"
+            app:layout_constraintStart_toStartOf="@id/answer"
+            app:layout_constraintEnd_toEndOf="@id/answer"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textColor="#000000" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
