@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".phone.activity.ExternalCallActivity">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="controlsViewModel"
+            type="com.dk.flutter_native_dialer_app_example.phone.activity.viewModels.ExternalCallsControlsViewModel" />
+        <variable
+            name="callViewModel"
+            type="com.dk.flutter_native_dialer_app_example.phone.activity.viewModels.ExternalCallsViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/content_external_call" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
