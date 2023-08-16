@@ -198,5 +198,7 @@
     <string name="home_fax">Home Fax</string>
     <string name="pager">Pager</string>
     <string name="other">Other</string>
+    <string name="action_answer">応答</string>
+    <string name="action_hangup">拒否</string>
 
 </resources>

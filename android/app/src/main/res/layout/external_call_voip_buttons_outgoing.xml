@@ -17,19 +17,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/voip_buttons_fragment_size">
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/hangup"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/button_call_terminate_background"
             android:contentDescription="@string/content_description_terminate_call"
             android:onClick="@{() -> callsViewModel.hangUp()}"
             android:padding="5dp"
             android:src="@drawable/icon_call_hangup"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="W,1.26:1"
+            app:layout_constraintDimensionRatio="W,1:1"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView

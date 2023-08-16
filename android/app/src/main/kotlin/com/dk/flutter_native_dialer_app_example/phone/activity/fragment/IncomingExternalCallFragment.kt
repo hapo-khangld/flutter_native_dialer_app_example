@@ -27,11 +27,9 @@ class IncomingExternalCallFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_incoming_external_call, container, false)
 
-        binding.apply {
-            lifecycleOwner = viewLifecycleOwner
-            controlsViewModel = extControlsViewModel
-            callsViewModel = extCallsViewModel
-        }
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.controlsViewModel = extControlsViewModel
+        binding.callsViewModel = extCallsViewModel
 
         return binding.root
 
