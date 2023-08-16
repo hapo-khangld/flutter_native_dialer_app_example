@@ -26,11 +26,40 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> addPhoneNumberToBlocked() async {
+    try {
+      await platform.invokeMethod('addPhoneNumberToBlocked');
+    } on PlatformException catch (e) {
+      print("Lỗi: ${e.message}");
+    }
+  }
+
+  Future<bool> actionCallPhoneNumber() async {
+    try {
+      final bool result = await platform.invokeMethod('actionCallToNumber', {'phoneNumber': '06243522446'});
+      return result;
+    } on PlatformException catch (e) {
+      print("Lỗi: ${e.message}");
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text('Demo dialer app'),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () => addPhoneNumberToBlocked(),
+              child: const Text('Demo dialer app'),
+            ),
+            InkWell(
+              onTap: () => actionCallPhoneNumber(),
+              child: const Text('Test action call'),
+            ),
+          ],
+        ),
       ),
     );
   }
